@@ -1,5 +1,5 @@
 #!/usr/bin/env expect
 cd [file dirname $argv0]
-spawn sh -c "exec bug5/bug5 -up /usr/bin/telnet -8 $argv"
+spawn sh -c "exec bug5 -up /usr/bin/telnet -8 $argv"
 interact timeout 180 { send "\033\[A\033\[B" }
 
