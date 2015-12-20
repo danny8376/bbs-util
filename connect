@@ -1,0 +1,12 @@
+#!/bin/sh
+basedir=`dirname $0`
+echo -n -e "\033k$1\033\\"
+case $1 in
+ptt*)
+    ssh bbsu@$1.cc
+    ;;
+eod)
+    $basedir/bbs eod.tw
+    ;;
+esac
+
