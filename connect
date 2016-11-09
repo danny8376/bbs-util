@@ -10,7 +10,8 @@ ptt*)
     fi
     ;;
 eod)
-    $basedir/bbs eod.tw
+    #$basedir/bbs eod.tw
+    $basedir/bbs bbs.tcfsh.tc.edu.tw
     ;;
 esac
 
