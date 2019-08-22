@@ -3,7 +3,7 @@ basedir=`dirname $0`
 echo -n -e "\033k$1\033\\"
 case $1 in
 ptt*)
-    if [ $2 = "telnet" ] ; then
+    if [ "$2" = "telnet" ] ; then
         $basedir/bbs $1.cc
     else
         ssh bbsu@$1.cc
