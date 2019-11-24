@@ -1,5 +1,50 @@
 #!/usr/bin/env expect
+if {[llength $argv] < 3} {
+    puts "Usage: $argv0 bug5/telnet/ssh <username> <host>"
+    exit 1
+}
+
+# get password
+stty -echo
+send_user -- "Password: "
+expect_user -re "(.*)\n"
+send_user "\n"
+stty echo
+set password $expect_out(1,string)
+
+# init
+set type [lindex $argv 0]
+set username [lindex $argv 1]
+set host [lindex $argv 2]
+set noexpect 0
+
 cd [file dirname $argv0]
-spawn sh -c "exec bug5 -up /usr/bin/telnet -8 $argv"
-interact timeout 180 { send "\033\[A\033\[B" }
+while { 0 < 1 } {
+    if { $type == "bug5" } {
+        set noexpect 1
+        spawn sh -c "exec bug5 -up /usr/bin/telnet -8 $host"
+    } elseif { $type == "telnet" } {
+        spawn telnet $host
+    } elseif { $type == "ssh" } {
+        spawn ssh $host
+    }
+    if { $noexpect == 0 } {
+        expect {
+            # eod.tw - bug5 broken QQ
+            "您的帳號" { send "$username\r" ; exp_continue }
+            # ptt(2/3)
+            "請輸入代號" { send "$username\r" ; exp_continue }
+            "請輸入您的密碼" { send "$password\r" ; exp_continue }
+            "您想刪除其他重複登入的連線嗎" { send "N\r" ; exp_continue }
+            "您要刪除以上錯誤嘗試的記錄嗎" { send "N\r" ; exp_continue }
+            "任意鍵繼續" { send "\r" } # login done -> go below to interact
+            "密碼不對喔" { exit }
+            "裡沒有這個人啦" { exit }
+            "請勿頻繁登入以免造成系統過度負荷" { send "\r" ; exp_continue }
+        }
+    }
+    interact timeout 180 { send "\033\[A\033\[B" }
+    puts "Current Session End, waiting 10 min to restart."
+    sleep 600
+}
 

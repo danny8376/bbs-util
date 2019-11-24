@@ -1,17 +1,21 @@
 #!/bin/sh
 basedir=`dirname $0`
 echo -n -e "\033k$1\033\\"
+
+username=danny8376
+
 case $1 in
 ptt*)
     if [ "$2" = "telnet" ] ; then
-        $basedir/bbs $1.cc
+        $basedir/bbs bug5 $username $1.cc
     else
-        ssh bbsu@$1.cc
+        $basedir/bbs ssh $username bbsu@$1.cc
     fi
     ;;
 eod)
-    #$basedir/bbs eod.tw
-    $basedir/bbs bbs.tcfsh.tc.edu.tw
+    #host=eod.tw
+    host=bbs.tcfsh.tc.edu.tw
+    $basedir/bbs bug5 $username $host
     ;;
 esac
 
