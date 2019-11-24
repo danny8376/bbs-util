@@ -37,7 +37,7 @@ while { 0 < 1 } {
             "請輸入您的密碼" { send "$password\r" ; exp_continue }
             "您想刪除其他重複登入的連線嗎" { send "N\r" ; exp_continue }
             "您要刪除以上錯誤嘗試的記錄嗎" { send "N\r" ; exp_continue }
-            "任意鍵繼續" { send "\r" } # login done -> go below to interact
+            "任意鍵繼續" { send " " } # logged in -> go below
             "密碼不對喔" { exit }
             "裡沒有這個人啦" { exit }
             "請勿頻繁登入以免造成系統過度負荷" { send "\r" ; exp_continue }
