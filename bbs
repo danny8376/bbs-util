@@ -30,14 +30,15 @@ while { 0 < 1 } {
     }
     if { $noexpect == 0 } {
         expect {
-            # eod.tw - bug5 broken QQ
+            # ### eod.tw - bug5 broken QQ
             "您的帳號" { send "$username\r" ; exp_continue }
-            # ptt(2/3)
+            # ### ptt(2/3)
             "請輸入代號" { send "$username\r" ; exp_continue }
             "請輸入您的密碼" { send "$password\r" ; exp_continue }
             "您想刪除其他重複登入的連線嗎" { send "N\r" ; exp_continue }
             "您要刪除以上錯誤嘗試的記錄嗎" { send "N\r" ; exp_continue }
-            "任意鍵繼續" { send " " } # logged in -> go below
+            # logged in ,then go below
+            "任意鍵繼續" { send " " }
             "密碼不對喔" { exit }
             "裡沒有這個人啦" { exit }
             "請勿頻繁登入以免造成系統過度負荷" { send "\r" ; exp_continue }
