@@ -45,7 +45,12 @@ while { 0 < 1 } {
         }
     }
     interact timeout 180 { send "\033\[A\033\[B" }
-    puts "Current Session End, waiting 10 min to restart."
-    sleep 600
+    if { $noexpect == 0 } {
+        wait
+        puts "Current Session End, waiting 10 min to restart."
+        sleep 600
+    } else {
+        exit
+    }
 }
 
